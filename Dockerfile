@@ -1,32 +1,27 @@
 
 
 
-# Use an official lightweight base image
-FROM ubuntu:22.04
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    fortune-mod \
-    cowsay \
-    netcat \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+# Use official Node.js base image
+FROM node:18-alpine
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy the shell script into the container
-COPY wisecow.sh .
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
 
-# Make the script executable
-RUN chmod +x wisecow.sh
+# Copy the rest of the application code
+COPY . .
 
-# Expose the port used by the script
-EXPOSE 4499
+# Expose the application port
+EXPOSE 3000
 
-# Run the script
-CMD ["./wisecow.sh"]
-:wq
+# Start the app
+CMD ["npm", "start"]
+
+
 
 
 
