@@ -1,11 +1,10 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wisecow-deployment
-  labels:
-    app: wisecow
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: wisecow
@@ -15,8 +14,7 @@ spec:
         app: wisecow
     spec:
       containers:
-        - name: wisecow
-          image: Dockerfile/wisecow:latest
-          ports:
-            - containerPort: 4499
-          imagePullPolicy: Always
+      - name: wisecow
+        image: your-dockerhub-username/wisecow-app:latest
+        ports:
+        - containerPort: 3000
